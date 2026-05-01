@@ -48,6 +48,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* IA_TwoWeaponSlot;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	UInputAction* IA_ExitGame;
+
 	//Для прыжка
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* IA_Jump;
@@ -108,6 +111,7 @@ public:
 	void Interact();
 	void OneWeaponSlot();
 	void TwoWeaponSlot();
+	void ExitGame();
 	
 	//функция из интерфейа для очистки ссылки на оружие
 	virtual void ClearPickingUpWeapon_Implementation() override;

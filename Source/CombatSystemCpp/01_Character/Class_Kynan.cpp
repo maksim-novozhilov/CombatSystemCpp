@@ -8,6 +8,7 @@
 #include "Animation/AnimInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "Interface_Weapon.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 // Sets default values
@@ -116,6 +117,9 @@ void AClass_Kynan::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		//Переключение слота на 1,2
 		EnhancedInputComponent->BindAction(IA_OneWeaponSlot, ETriggerEvent::Started, this, &AClass_Kynan::OneWeaponSlot);
 		EnhancedInputComponent->BindAction(IA_TwoWeaponSlot, ETriggerEvent::Started, this, &AClass_Kynan::TwoWeaponSlot);
+
+		//Выход из игры
+		EnhancedInputComponent->BindAction(IA_ExitGame, ETriggerEvent::Started, this, &AClass_Kynan::ExitGame);
 	}
 }
 
@@ -252,6 +256,12 @@ void AClass_Kynan::StopJumpMontage()
 }
 
 
+void AClass_Kynan::ExitGame()
+{
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Magenta, TEXT("Кнопка нажата"));
+	UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
+}
+
 
 void AClass_Kynan::AttackLBM()
 {
@@ -328,6 +338,7 @@ void AClass_Kynan::TwoWeaponSlot()
 {
 	SwitchWeapon(1);
 }
+
 
 void AClass_Kynan::SwitchWeapon(int32 PressedSlotIndex)
 {

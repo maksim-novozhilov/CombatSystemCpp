@@ -11,6 +11,7 @@
 
 
 
+
 // Sets default values
 AClassEnemy::AClassEnemy()
 {
@@ -45,13 +46,24 @@ void AClassEnemy::GetDamageEnemy_Implementation(float DamageReceived)
 		HealthBar->UpdateHealthPercent(Health / MaxHealth); 
 	}
 	
+	
 	if (Health <= 0.f)
 	{
 		EnemyDie();
 	}
 
+	if (EnemyMesh && Health > 0.f)
+	{
+		// Резко наклоняем меш 
+		FRotator HitRotation = FRotator(FMath::RandRange(-7.f, 7.f), FMath::RandRange(-7.f, 7.f), 0.f);
+		EnemyMesh->SetRelativeRotation(HitRotation);
+	}
+
 	
 }
+	
+	
+	
 
 void AClassEnemy::EnemyDie()
 {
@@ -98,6 +110,15 @@ void AClassEnemy::BeginPlay()
 void AClassEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//Возвращение в исходную позицию после импульса при уроне
+	if (EnemyMesh && !EnemyMesh->GetRelativeRotation().IsNearlyZero() && Health > 0.f)
+	{
+		FRotator CurrentRot = EnemyMesh->GetRelativeRotation();
+		FRotator TargetRot = FRotator::ZeroRotator; // Возврат в 0
+
+		EnemyMesh->SetRelativeRotation(FMath::RInterpTo(CurrentRot, TargetRot, DeltaTime, 15.f));
+	}
 
 }
 
