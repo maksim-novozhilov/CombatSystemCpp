@@ -7,6 +7,7 @@
 #include "Animation/AnimMontage.h"
 #include "Interface_Weapon.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/Texture2D.h"
 
 
 #include "AClass_WeaponBase.generated.h"
@@ -49,6 +50,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USceneComponent* GripPoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UTexture2D* WeaponIcon; 
 
 
 	

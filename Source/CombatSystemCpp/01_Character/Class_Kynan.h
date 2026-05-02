@@ -12,6 +12,9 @@
 
 #include "Class_Kynan.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventaryChanged, int32, SlotIndex, UTexture2D*, WeaponIcon);
+
 UCLASS()
 class COMBATSYSTEMCPP_API AClass_Kynan : public ACharacter, public IInterface_Weapon
 {
@@ -135,13 +138,20 @@ protected: UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapons")
 	TArray<AActor*> WeaponInventory;
 //эта переменная указывает на слот в инвентаре, оружие из которого находится в руках
 protected: UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapons")
-		 int32 ActiveSlotIndex = -1;
+		 int32 ActiveSlotIndex = -1;	
+
+		UPROPERTY(BlueprintAssignable)
+		FOnInventaryChanged OnInventaryChanged;
+
 //функция, которая ищет первый свободный слот в инвентаре, записывает туда найденное оружие
 protected: UFUNCTION()
 		 void SaveWeaponToArray();
 //функция, которая переключает оружие в руке, а так же убирает его за спину
 protected: UFUNCTION()
 		 void SwitchWeapon(int32 PressedSlotIndex);
+//Функция, меняет иконку в инвентаре на экране
+protected: UFUNCTION()
+		 void SetInventoryIcon();		 
 
 //функция, которая перемешает оружие из руки на спину
 protected: UFUNCTION()

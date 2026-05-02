@@ -292,6 +292,8 @@ void AClass_Kynan::Interact()
 		return;
 	}
 
+	SetInventoryIcon();
+
 	else if (bHasWeapon && EquippedWeapon)
 	{
 		IInterface_Weapon::Execute_DropWeapon(EquippedWeapon, GetMesh());
@@ -375,6 +377,10 @@ void AClass_Kynan::SwitchWeapon(int32 PressedSlotIndex)
 
 }
 
+void AClass_Kynan::SetInventoryIcon()
+{
+	OnInventaryChanged.Brodcast()
+}
 
 void AClass_Kynan::ClearPickingUpWeapon_Implementation()
 {
