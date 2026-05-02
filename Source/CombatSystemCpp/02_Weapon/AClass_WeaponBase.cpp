@@ -288,6 +288,11 @@ void AAClass_WeaponBase::WeaponDamageCollision_Implementation(bool EnableCollisi
 	}
 }
 
+UTexture2D* AAClass_WeaponBase::GetWeaponIcon_Implementation()
+{
+	return WeaponIcon;
+}
+
 			
 			
 

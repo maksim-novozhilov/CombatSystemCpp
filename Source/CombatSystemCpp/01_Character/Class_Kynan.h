@@ -8,9 +8,8 @@
 #include "InputAction.h"
 #include "InputActionValue.h"
 #include "Interface_Weapon.h"
-
-
 #include "Class_Kynan.generated.h"
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventaryChanged, int32, SlotIndex, class UTexture2D*, NewIcon);
 
 UCLASS()
 class COMBATSYSTEMCPP_API AClass_Kynan : public ACharacter, public IInterface_Weapon
@@ -21,7 +20,8 @@ public:
 	// Sets default values for this character's properties
 	AClass_Kynan();
 	
-	
+	UPROPERTY(BlueprintAssignable, Category = "Inventory")
+	FOnInventaryChanged OnInventaryChanged;
 	
 	//SETUP INPUT MAPPING CONTEXT
 	void SetupInputMappingContext();
@@ -149,6 +149,9 @@ protected: UFUNCTION()
 //функция, которая перемешает оружие со спины в руку
 protected: UFUNCTION()
 		 void WeaponToHand();
+//Функция, которая меняет иконку в инвентаре
+protected: UFUNCTION()
+		 void SetInventoryIcon();
 
 
 

@@ -289,13 +289,17 @@ void AClass_Kynan::Interact()
 			
 		SaveWeaponToArray();
 
+		SetInventoryIcon();
+
 		return;
 	}
+
 
 	else if (bHasWeapon && EquippedWeapon)
 	{
 		IInterface_Weapon::Execute_DropWeapon(EquippedWeapon, GetMesh());
 	}
+	
 	
 }
 
@@ -311,6 +315,7 @@ void AClass_Kynan::WeaponToHand()
 {
 	IInterface_Weapon::Execute_WeaponMoveToHand(EquippedWeapon, GetMesh());
 }
+
 
 void AClass_Kynan::SaveWeaponToArray()
 {
@@ -375,11 +380,48 @@ void AClass_Kynan::SwitchWeapon(int32 PressedSlotIndex)
 
 }
 
+void AClass_Kynan::SetInventoryIcon()
+{
+	
+	
+	if (EquippedWeapon && ActiveSlotIndex != -1)
+	{
+		
+		
+		UTexture2D* Icon = Execute_GetWeaponIcon(EquippedWeapon);
+		
+		OnInventaryChanged.Broadcast(ActiveSlotIndex, Icon);
+
+
+		FString IconName = Icon ? Icon->GetName() : TEXT("NULL");
+		FString Message = FString::Printf(TEXT("SLOT: %d | ICON: %s"), ActiveSlotIndex, *IconName);
+
+		// Вывод на экран (зеленым цветом на 5 секунд)
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Message);
+		}
+
+
+
+	}
+
+	
+	
+}
 
 void AClass_Kynan::ClearPickingUpWeapon_Implementation()
 {
 	if (EquippedWeapon)
 	{
+		
+		if (ActiveSlotIndex != -1)
+		{
+			
+		    OnInventaryChanged.Broadcast(ActiveSlotIndex, nullptr);
+		}
+		
+		
 		if (ActiveSlotIndex != -1)
 		{
 			WeaponInventory[ActiveSlotIndex] = nullptr;
@@ -398,6 +440,7 @@ void AClass_Kynan::ClearPickingUpWeapon_Implementation()
 
 		}
 
+		
 		bHasWeapon = bFoundSomething;
 	}
 	

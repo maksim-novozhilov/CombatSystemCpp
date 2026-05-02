@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "Engine/Texture2D.h"
 #include "Interface_Weapon.generated.h"
 
 
@@ -55,6 +56,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
 	void WeaponMoveToHand(USceneComponent* MeshKynan);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
+	UTexture2D* GetWeaponIcon();
 
 
 	
