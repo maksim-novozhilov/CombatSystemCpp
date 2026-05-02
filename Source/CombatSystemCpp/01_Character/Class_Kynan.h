@@ -9,11 +9,11 @@
 #include "InputActionValue.h"
 #include "Interface_Weapon.h"
 
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventaryChanged, int32, SlotIndex, class UTexture2D*, NewIcon)
 
 #include "Class_Kynan.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventaryChanged, int32, SlotIndex, UTexture2D*, WeaponIcon);
 
 UCLASS()
 class COMBATSYSTEMCPP_API AClass_Kynan : public ACharacter, public IInterface_Weapon
@@ -160,6 +160,9 @@ protected: UFUNCTION()
 protected: UFUNCTION()
 		 void WeaponToHand();
 
+
+		 UFUNCTION()
+		 void TestPrint(int32 SlotIndex, UTexture2D* NewIcon);
 
 
 

@@ -81,6 +81,7 @@ protected:
 	virtual void WeaponMoveToBack_Implementation(USceneComponent* MeshKynan) override;
 	virtual void WeaponMoveToHand_Implementation(USceneComponent* MeshKynan) override;
 	virtual void WeaponDamageCollision_Implementation(bool EnableCollision) override;
+	virtual UTexture2D* GetInventoryIcon() const override { return WeaponIcon; }
 
 	
 

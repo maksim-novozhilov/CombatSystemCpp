@@ -56,6 +56,8 @@ void AClass_Kynan::BeginPlay()
 	/////////////Создаем в инвентаре 2 пустые ясейки
 	WeaponInventory.Init(nullptr, 2);
 	
+
+	OnInventaryChanged.AddDynamic(this, &AClass_Kynan::TestPrint);
 	
 }
 
@@ -314,6 +316,13 @@ void AClass_Kynan::WeaponToHand()
 	IInterface_Weapon::Execute_WeaponMoveToHand(EquippedWeapon, GetMesh());
 }
 
+void AClass_Kynan::TestPrint(int32 SlotIndex, UTexture2D* NewIcon)
+{
+	FString IconName = NewIcon ? NewIcon->GetName() : TEXT("Empty");
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,
+		FString::Printf(TEXT("C++ Log: Slot %d updated with %s"), SlotIndex, *IconName));
+}
+
 void AClass_Kynan::SaveWeaponToArray()
 {
 	for (int32 i = 0; i < WeaponInventory.Num(); i++)
@@ -379,7 +388,15 @@ void AClass_Kynan::SwitchWeapon(int32 PressedSlotIndex)
 
 void AClass_Kynan::SetInventoryIcon()
 {
-	OnInventaryChanged.Brodcast()
+	IInterface_Weapon* Interface = Cast<IInterface_Weapon>(EquippedWeapon);
+	
+	if (Interface)
+	{
+		UTexture2D* Icon = Interface->GetInventoryIcon();
+
+		OnInventaryChanged.Broadcast(ActiveSlotIndex, Icon);
+	}
+	
 }
 
 void AClass_Kynan::ClearPickingUpWeapon_Implementation()

@@ -4,7 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "Engine/Texture2D.h"
 #include "Interface_Weapon.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInventaryChanged, int32, SlotIndex, class UTexture2D*, NewIcon);
+
+
 
 
 UENUM(BlueprintType)
@@ -14,6 +19,8 @@ enum class EWeaponType : uint8
 	EWT_Sword UMETA(DisplayName = "Sword"),
 	EWT_Axe UMETA(DisplayName = "Axe")
 };
+
+
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
@@ -55,6 +62,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
 	void WeaponMoveToHand(USceneComponent* MeshKynan);
+
+	 virtual UTexture2D* GetInventoryIcon() const = 0;
 
 
 	
