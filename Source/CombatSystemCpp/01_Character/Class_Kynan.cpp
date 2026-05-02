@@ -215,7 +215,11 @@ void AClass_Kynan::Jumping()
 {
 	Jump();
 
+	if (EquippedWeapon)
+	{
 	IInterface_Weapon::Execute_ResetCombo(EquippedWeapon);
+
+	}
 
 	bJustLanded = false;
 
